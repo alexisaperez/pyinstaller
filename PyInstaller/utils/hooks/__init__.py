@@ -802,11 +802,12 @@ def relpath_to_config_or_make(filename):
     # Relative path in the dist directory.
     prefix = _find_prefix(filename)
     rel_path = os.path.relpath(os.path.dirname(filename), prefix)
-    if '../' in rel_path and is_darwin:
-        sp_path = os.path.relpath(os.path.abspath(rel_path), os.path.expanduser('~'))
+    if '..' in rel_path and is_darwin:
+        sp_path = os.path.relpath(os.path.dirname(filename), prefix).strip("../")
     else:
         sp_path = os.path.relpath(os.path.dirname(filename), prefix)
     return sp_path
+
 
 
 def copy_metadata(package_name):
